@@ -10,6 +10,7 @@
 #include <libavformat/avformat.h>
 #include <libavdevice/avdevice.h>
 #import <AVFoundation/AVFoundation.h>
+#include <SDL2/SDL.h>
 
 #define FMT_NAME "avfoundation"
 #define DEVICE_NAME ":0"
@@ -27,6 +28,14 @@
 
     NSLog(@"%s", av_version_info());
     
+    SDL_version v;
+    NSLog(@"%hhu,%hhu,%hhu", v.major, v.minor, v.patch);
+    
+    // 初始化Audio子系统
+    if (SDL_Init(SDL_INIT_AUDIO)) {
+        // 返回值不是0， 代表失败
+        NSLog(@"SDL_INIT_ERROR:%s", SDL_GetError());
+    }
 }
 
 - (void)record {
@@ -73,45 +82,34 @@
         NSLog(@"无法打开文件");
     }
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        
-        while (!self->_stop) {
+    while (!self->_stop) {
+        int ret = av_read_frame(ctx, packet);
+        if (ret == 0) {
+            NSData *data = [NSData dataWithBytes:packet->data length:packet->size];
+            [fileHandle writeData:data];
+            NSLog(@"写入文件: %d", packet->size);
+        }else if (ret == AVERROR(EAGAIN)){
+            continue;
+        }else {
+            char errorBuf[1024];
+            av_strerror(ret, errorBuf, 1024);
             
-            int ret = av_read_frame(ctx, packet);
-            if (ret == 0) {
-                NSData *data = [NSData dataWithBytes:packet->data length:packet->size];
-                [fileHandle writeData:data];
-                NSLog(@"写入文件: %d", packet->size);
-                
-                
-                
-            }else if (ret == AVERROR(EAGAIN)){
-                continue;
-            }else {
-                char errorBuf[1024];
-                av_strerror(ret, errorBuf, 1024);
-                
-                NSLog(@"====");
-                break;
-            }
-            
-            av_packet_unref(packet);
+            NSLog(@"====");
+            break;
         }
-        
-        // 关闭文件
-        NSLog(@"关闭文件");
-        [fileHandle synchronizeFile];
-        [fileHandle closeFile];
-        
-        // 释放资源
-//        av_packet_free(packet);
-//
-//        // 关闭设备
-//        avformat_close_input(ctx);
-        
-        
-    });
+        av_packet_unref(packet);
+    }
+    
+    // 关闭文件
+    NSLog(@"关闭文件");
+    [fileHandle synchronizeFile];
+    [fileHandle closeFile];
+    
+    // 释放资源
+    av_packet_free(&packet);
+    
+    // 关闭设备
+    avformat_close_input(&ctx);
 }
 
 - (IBAction)start:(id)sender {

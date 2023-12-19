@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		371544222B305A49007FF2AC /* output.pcm in Resources */ = {isa = PBXBuildFile; fileRef = 371544212B305A49007FF2AC /* output.pcm */; };
+		371544642B318145007FF2AC /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 371544632B318145007FF2AC /* libSDL2.a */; };
 		37716B0E2B2D5AEE000B152B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 37716B0D2B2D5AEE000B152B /* AppDelegate.m */; };
 		37716B112B2D5AEE000B152B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37716B102B2D5AEE000B152B /* ViewController.m */; };
 		37716B132B2D5AF0000B152B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37716B122B2D5AF0000B152B /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		371544212B305A49007FF2AC /* output.pcm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = output.pcm; sourceTree = "<group>"; };
+		371544632B318145007FF2AC /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = ../../../../usr/local/Cellar/sdl2/2.28.5/lib/libSDL2.a; sourceTree = "<group>"; };
 		37716B092B2D5AEE000B152B /* LearningFFmpeg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LearningFFmpeg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37716B0C2B2D5AEE000B152B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		37716B0D2B2D5AEE000B152B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				371544642B318145007FF2AC /* libSDL2.a in Frameworks */,
 				37716B452B2D5DD2000B152B /* libavutil.a in Frameworks */,
 				37716B462B2D5DD2000B152B /* libpostproc.a in Frameworks */,
 				37716B432B2D5DD2000B152B /* libavfilter.a in Frameworks */,
@@ -107,6 +110,7 @@
 		37716B1F2B2D5C6F000B152B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				371544632B318145007FF2AC /* libSDL2.a */,
 				37716B402B2D5DA7000B152B /* libavcodec.a */,
 				37716B3F2B2D5DA7000B152B /* libavdevice.a */,
 				37716B3A2B2D5DA6000B152B /* libavfilter.a */,
@@ -337,7 +341,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				"HEADER_SEARCH_PATHS[arch=*]" = /usr/local/Cellar/ffmpeg/6.0_1/include;
+				"HEADER_SEARCH_PATHS[arch=*]" = (
+					/usr/local/Cellar/ffmpeg/6.0_1/include,
+					/usr/local/Cellar/sdl2/2.28.5/include,
+				);
 				INFOPLIST_KEY_NSCameraUsageDescription = "录像";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
@@ -347,7 +354,10 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/ffmpeg/6.0_1/lib;
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/Cellar/ffmpeg/6.0_1/lib,
+					/usr/local/Cellar/sdl2/2.28.5/lib,
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.58house.pods.zxf.LearningFFmpeg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -376,7 +386,10 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/ffmpeg/6.0_1/lib;
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/Cellar/ffmpeg/6.0_1/lib,
+					/usr/local/Cellar/sdl2/2.28.5/lib,
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.58house.pods.zxf.LearningFFmpeg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
