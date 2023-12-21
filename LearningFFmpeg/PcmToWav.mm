@@ -83,8 +83,7 @@ typedef struct WAVHeader {
     
     NSFileHandle *wavFileHandle = [NSFileHandle fileHandleForWritingAtPath:wavFilePath];
     
-    if (wa
-        vFileHandle == nil) {
+    if (wavFileHandle == nil) {
         NSLog(@"文件打开失败");
         return;
     }
