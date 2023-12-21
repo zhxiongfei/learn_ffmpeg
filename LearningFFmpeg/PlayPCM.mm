@@ -9,8 +9,9 @@
 #import <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
 #include <libavdevice/avdevice.h>
-#import <AVFoundation/AVFoundation.h>
 #include <SDL2/SDL.h>
+#include <iostream>
+#include <fstream>
 
 #define FMT_NAME "avfoundation"
 #define DEVICE_NAME ":0"
@@ -54,8 +55,6 @@ void pull_audio_data(void *userdata, Uint8 *stream, int len) {
 
     // 取len、bufferLen的最小值（为了保证数据安全，防止指针越界）
     len = len > bufferLen ? bufferLen : len;
-
-    NSLog(@"%s", bufferData);
     
     // 填充数据
     SDL_MixAudio(stream,
@@ -112,51 +111,31 @@ void pull_audio_data(void *userdata, Uint8 *stream, int len) {
 
     NSString *filePath = FILE_NAME;
     NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:filePath];
-    if (!fileHandle) {
+    
+    if (fileHandle == nil) {
         NSLog(@"fileHandle 为空");
-
+        
         // 关闭设备
         SDL_CloseAudio();
         // 清除所有子系统
         SDL_Quit();
-
+        
         return;
     }
 
     // 开始播放
     SDL_PauseAudio(0);
-
-    // 存放文件数据
-//    Uint8 data[BUFFER_SIZE];
-
+    
     while (!_play_stop) {
         // 只要从文件中读取的音频数据，还没有填充完毕，就跳过
         if (bufferLen > 0) continue;
 
         NSData *d = [fileHandle readDataOfLength:BUFFER_SIZE];
         
-
-        char *charArray = (char *)malloc([d length] + 1); // +1 是为了存储字符串结束符 '\0'
-        if (charArray != NULL) {
-            memcpy(charArray, [d bytes], [d length]);
-            // charArray[[d length]] = '\0'; // 添加字符串结束符
-            bufferData = charArray;
-            bufferLen = strlen(bufferData);
-
-//            free(charArray);
-        }
-
-        SDL_Delay(1);
+        NSLog(@"--------- fileoffset : %llu", fileHandle.offsetInFile);
         
-        // 文件数据已经读取完毕
-//        if (buffer.mDataByteSize <= 0) {
-            // 剩余的样本数量
-//            SDL_Delay(1);
-//            break;
-//        }
-
-        // 读取到了文件数据
-//        buffer.mData = data;
+        bufferData = (char *)[d bytes];
+        bufferLen = [d length];
     }
 }
 
