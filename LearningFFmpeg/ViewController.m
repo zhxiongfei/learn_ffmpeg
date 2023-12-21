@@ -13,6 +13,7 @@
 #include <SDL2/SDL.h>
 #import "PlayPCM.h"
 #import "RecordPCM.h"
+#import "PcmToWav.h"
 
 @interface ViewController()
 
@@ -42,6 +43,11 @@
 
 - (IBAction)stop:(id)sender {
     [RecordPCM stop];
+}
+
+- (IBAction)pcmToWav:(id)sender {
+    
+    [PcmToWav startTransition];
 }
 
 @end

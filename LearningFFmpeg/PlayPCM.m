@@ -138,6 +138,13 @@ void pull_audio_data(void *userdata, Uint8 *stream, int len) {
         buffer.data = (char *)[d bytes];
         buffer.len = (int)[d length];
     }
+    
+    // 关闭设备
+    SDL_CloseAudio();
+    // 清除所有子系统
+    SDL_Quit();
+    // 关闭文件
+    [fileHandle closeFile];
 }
 
 @end
