@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		371544222B305A49007FF2AC /* output.pcm in Resources */ = {isa = PBXBuildFile; fileRef = 371544212B305A49007FF2AC /* output.pcm */; };
 		371544642B318145007FF2AC /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 371544632B318145007FF2AC /* libSDL2.a */; };
-		371545112B330621007FF2AC /* PlayPCM.mm in Sources */ = {isa = PBXBuildFile; fileRef = 371545102B330621007FF2AC /* PlayPCM.mm */; };
+		371545112B330621007FF2AC /* PlayPCM.m in Sources */ = {isa = PBXBuildFile; fileRef = 371545102B330621007FF2AC /* PlayPCM.m */; };
 		371545142B33067B007FF2AC /* RecordPCM.m in Sources */ = {isa = PBXBuildFile; fileRef = 371545132B33067B007FF2AC /* RecordPCM.m */; };
 		37716B0E2B2D5AEE000B152B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 37716B0D2B2D5AEE000B152B /* AppDelegate.m */; };
 		37716B112B2D5AEE000B152B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37716B102B2D5AEE000B152B /* ViewController.m */; };
@@ -30,7 +30,7 @@
 		371544212B305A49007FF2AC /* output.pcm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = output.pcm; sourceTree = "<group>"; };
 		371544632B318145007FF2AC /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = ../../../../usr/local/Cellar/sdl2/2.28.5/lib/libSDL2.a; sourceTree = "<group>"; };
 		3715450F2B330621007FF2AC /* PlayPCM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayPCM.h; sourceTree = "<group>"; };
-		371545102B330621007FF2AC /* PlayPCM.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = PlayPCM.mm; sourceTree = "<group>"; };
+		371545102B330621007FF2AC /* PlayPCM.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = PlayPCM.m; sourceTree = "<group>"; };
 		371545122B33067B007FF2AC /* RecordPCM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecordPCM.h; sourceTree = "<group>"; };
 		371545132B33067B007FF2AC /* RecordPCM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecordPCM.m; sourceTree = "<group>"; };
 		37716B092B2D5AEE000B152B /* LearningFFmpeg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LearningFFmpeg.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,7 +107,7 @@
 				371545122B33067B007FF2AC /* RecordPCM.h */,
 				371545132B33067B007FF2AC /* RecordPCM.m */,
 				3715450F2B330621007FF2AC /* PlayPCM.h */,
-				371545102B330621007FF2AC /* PlayPCM.mm */,
+				371545102B330621007FF2AC /* PlayPCM.m */,
 				371544212B305A49007FF2AC /* output.pcm */,
 				37716B122B2D5AF0000B152B /* Assets.xcassets */,
 				37716B142B2D5AF0000B152B /* Main.storyboard */,
@@ -213,7 +213,7 @@
 			files = (
 				37716B112B2D5AEE000B152B /* ViewController.m in Sources */,
 				37716B182B2D5AF0000B152B /* main.m in Sources */,
-				371545112B330621007FF2AC /* PlayPCM.mm in Sources */,
+				371545112B330621007FF2AC /* PlayPCM.m in Sources */,
 				371545142B33067B007FF2AC /* RecordPCM.m in Sources */,
 				37716B0E2B2D5AEE000B152B /* AppDelegate.m in Sources */,
 			);

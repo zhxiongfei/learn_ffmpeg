@@ -10,8 +10,6 @@
 #include <libavformat/avformat.h>
 #include <libavdevice/avdevice.h>
 #include <SDL2/SDL.h>
-#include <iostream>
-#include <fstream>
 
 #define FMT_NAME "avfoundation"
 #define DEVICE_NAME ":0"
@@ -38,8 +36,11 @@
 
 @implementation PlayPCM
 
-size_t bufferLen;
-char *bufferData;
+typedef struct {
+    int len;
+    int pullLen;
+    char *data;
+} AudioBuffer;
 
 BOOL _play_stop;
 
@@ -49,21 +50,23 @@ BOOL _play_stop;
 void pull_audio_data(void *userdata, Uint8 *stream, int len) {
     // 清空stream
     SDL_memset(stream, 0, len);
+    
+    AudioBuffer *buffer = (AudioBuffer *)userdata;
 
     // 文件数据还没准备好
-    if (bufferLen <= 0) return;
+    if (buffer->data <= 0) return;
 
     // 取len、bufferLen的最小值（为了保证数据安全，防止指针越界）
-    len = len > bufferLen ? bufferLen : len;
+    len = len > buffer->len ? buffer->len : len;
     
     // 填充数据
     SDL_MixAudio(stream,
-                 (Uint8 *)bufferData,
+                 (Uint8 *)buffer->data,
                  len,
                  SDL_MIX_MAXVOLUME);
 
-    bufferData += len;
-    bufferLen -= len;
+    buffer->data += len;
+    buffer->len -= len;
 }
 
 + (void)play{
@@ -98,8 +101,8 @@ void pull_audio_data(void *userdata, Uint8 *stream, int len) {
     spec.callback = pull_audio_data;
 
     // 传递给回调的参数
-//    AudioBuffer buffer;
-//    spec.userdata = &buffer;
+    AudioBuffer buffer;
+    spec.userdata = &buffer;
 
     int openCode = SDL_OpenAudio(&spec, nil);
     if (openCode) {
@@ -128,14 +131,12 @@ void pull_audio_data(void *userdata, Uint8 *stream, int len) {
     
     while (!_play_stop) {
         // 只要从文件中读取的音频数据，还没有填充完毕，就跳过
-        if (bufferLen > 0) continue;
+        if (buffer.len > 0) continue;
 
         NSData *d = [fileHandle readDataOfLength:BUFFER_SIZE];
         
-        NSLog(@"--------- fileoffset : %llu", fileHandle.offsetInFile);
-        
-        bufferData = (char *)[d bytes];
-        bufferLen = [d length];
+        buffer.data = (char *)[d bytes];
+        buffer.len = (int)[d length];
     }
 }
 
