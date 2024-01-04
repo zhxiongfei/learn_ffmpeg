@@ -15,6 +15,7 @@
 #define DEVICE_NAME ":0"
 
 #define FILE_NAME @"/Users/a58/Desktop/audio/chujian.pcm"
+//#define FILE_NAME @"/Users/a58/Desktop/audio/qt_record/1.pcm"
 
 // 采样率
 #define SAMPLE_RATE 16000

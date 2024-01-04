@@ -64,6 +64,22 @@ typedef struct WAVHeader {
         return;
     }
     
+    
+    NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:pcmFilePath error:nil];
+    // 从文件属性中获取文件大小
+    NSNumber *fileSize = [fileAttributes objectForKey:NSFileSize];
+    long long fileSizeInBytes = [fileSize longLongValue];
+
+    // 转换文件大小为 uint32_t 类型
+    uint32_t fileSizeAsUInt32 = 0;
+    if (fileSizeInBytes >= 0 && fileSizeInBytes <= UINT32_MAX) {
+        fileSizeAsUInt32 = (uint32_t)fileSizeInBytes;
+        NSLog(@"File Size as uint32_t: %u bytes", fileSizeAsUInt32);
+    } else {
+        NSLog(@"File Size exceeds the range of uint32_t.");
+    }
+    header.dataChunkDataSize = fileSizeAsUInt32;
+    
     header.riffChunkDataSize = header.dataChunkDataSize
                                + sizeof (WAVHeader)
                                - sizeof (header.riffChunkId)

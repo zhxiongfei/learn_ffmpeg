@@ -7,10 +7,11 @@
 
 #import "RecordPCM.h"
 #import <libavcodec/avcodec.h>
-#include <libavformat/avformat.h>
-#include <libavdevice/avdevice.h>
+#import <libavformat/avformat.h>
+#import <libavdevice/avdevice.h>
 #import <AVFoundation/AVFoundation.h>
-#include <SDL2/SDL.h>
+#import <SDL2/SDL.h>
+#import <libavutil/samplefmt.h>
 
 @implementation RecordPCM
 
@@ -30,6 +31,24 @@ BOOL _record_stop;
             
             // 格式上下文(后面通过格式上下文操作设备)
             AVFormatContext *ctx = avformat_alloc_context();;
+
+            
+//            // 获取输入流
+//            AVStream *stream = ctx->streams[0];
+//            // 获取音频参数
+//            AVCodecParameters *params = stream->codecpar;
+//            // 声道数
+//            NSLog(@"声道数: %d",params->channels);
+//
+//            // 采样率
+//            NSLog(@"采样率: %d",params->sample_rate);
+//
+//            // 采样格式
+//            NSLog(@"采样格式: %d",params->format);
+//            // 每一个样本的一个声道占用多少个字节
+//            NSLog(@"每一个样本的一个声道占用多少个字节: %d",av_get_bytes_per_sample((AVSampleFormat) params->format));
+
+
             // 打开设备
             int ret = avformat_open_input(&ctx, ":1", pInputFmt, nil);
             
